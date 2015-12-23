@@ -34,10 +34,14 @@ int main(int argc, char* argv[])
 	}
 
 	double pi = 0;
+	
 	for (int i = rank; i < n; i += size)
 	{
+		//Считаем по формуле Лейбница
 		pi += pow(-1, i) / (2 * i + 1);
 	}
+	//0 поток принимает от других потоков их сумму
+	//и прибавляет к текущей
 	if (rank == 0)
 	{
 		for (int m = 1; m < size; m++)
@@ -50,6 +54,7 @@ int main(int argc, char* argv[])
 	}
 	else
 	{
+		//Ненулевые потоки отправляют свою сумму потоку 0
 		MPI_Send(&pi, 1, MPI_DOUBLE, 0, rank, MPI_COMM_WORLD);
 	}
 
