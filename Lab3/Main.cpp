@@ -59,12 +59,13 @@ int main(int argc, char* argv[])
 	}
 
 	MPI_Barrier(MPI_COMM_WORLD);
-
+	double realPi = 3.141592653589793238462643383279502884197169399375105820974944;
 	if (rank == 0)
 	{
 		t2 = MPI_Wtime();
 		cout.precision(17);
-		cout << "\nPi: " << pi*4;
+		cout << "\nMy Pi: " << pi*4;
+		cout << "\nError: " << abs(realPi - pi * 4);
 		cout << "\nTime: " << (t2 - t1);
 	}
 
